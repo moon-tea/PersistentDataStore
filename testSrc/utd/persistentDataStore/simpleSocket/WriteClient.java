@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 import utd.persistentDataStore.simpleSocket.client.Client;
 import utd.persistentDataStore.simpleSocket.server.Server;
 
-public class EchoClient
+public class WriteClient
 {
-	private static Logger logger = Logger.getLogger(EchoClient.class);
+	private static Logger logger = Logger.getLogger(WriteClient.class);
 	
 	public static void main(String args[])
 	{
@@ -19,12 +19,11 @@ public class EchoClient
 			int port = Server.port;
 			Client client = new Client(address, port);
 			
-			String msg = "Is it the time?";
+			String msg = "Write to file";
 			logger.debug("Sending Request " + msg);
-			String reply = client.echo(msg);
+			String reply = client.write(msg);
 			
 			logger.debug("Received Response <" + reply + ">");
-			
 		}
 		catch(Exception ex) {
 			logger.error("Exception Thrown " + ex.getMessage());

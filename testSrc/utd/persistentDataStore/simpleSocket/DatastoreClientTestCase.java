@@ -36,5 +36,19 @@ public class DatastoreClientTestCase
 		assertEquals("?emit eht siht sI", result);
 		
 	}
+	
+	@Test
+	public void testWrite() throws Exception
+	{
+		byte byteAddr[] = { 127, 0, 0, 1 };
+		InetAddress address = InetAddress.getByAddress(byteAddr);
+		int port = Server.port;
+		Client client = new Client(address, port);
+		
+		String msg = "Write to file";
+		String result = client.write(msg);
+		assertEquals(msg, result);
+		
+	}
 
 }

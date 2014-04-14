@@ -67,6 +67,10 @@ public class Server
 			Handler handler = new ReverseHandler();
 			return handler;
 		}
+		else if ("write".equalsIgnoreCase(commandString)) {
+			Handler handler = new WriteHandler();
+			return handler;
+		}
 		else {
 			throw new ServerException("Unknown Request: " + commandString);
 		}
