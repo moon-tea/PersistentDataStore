@@ -129,8 +129,12 @@ public class Client
 			logger.debug("Reading Response");
 			String result = StreamUtil.readLine(inputStream);
 			logger.debug("Response " + result);
+			String size = StreamUtil.readLine(inputStream);
+			logger.debug("Size " + size);
+			String data = StreamUtil.readLine(inputStream);
+			logger.debug("Data " + data);
 			
-			return result;
+			return ( result + "\n" + size + "\n" + data);
 		}
 		catch (IOException ex) {
 			throw new ClientException(ex.getMessage(), ex);
@@ -156,6 +160,41 @@ public class Client
 			logger.debug("Reading Response");
 			String result = StreamUtil.readLine(inputStream);
 			logger.debug("Response " + result);
+			
+			return result;
+		}
+		catch (IOException ex) {
+			throw new ClientException(ex.getMessage(), ex);
+		}
+	}
+	/**
+	 * Sends the given string to the server which will try to give us the dir
+	 */
+	public String directory() throws ClientException
+	{
+		try {
+			logger.debug("Opening Socket");
+			Socket socket = new Socket();
+			SocketAddress saddr = new InetSocketAddress(address, port);
+			socket.connect(saddr);
+			InputStream inputStream = socket.getInputStream();
+			OutputStream outputStream = socket.getOutputStream();
+			
+			logger.debug("Reading Message");
+			StreamUtil.writeLine("directory\n", outputStream);
+						
+			logger.debug("Reading Response");
+			String result = StreamUtil.readLine(inputStream);
+			logger.debug("Response " + result);
+			String size = StreamUtil.readLine(inputStream);
+			logger.debug("Number of Files " + size);
+			result += ("\n" + size + "\n");
+			for(int i = 0; i < Integer.parseInt(size); i++)
+			{
+				String s = StreamUtil.readLine(inputStream);
+				logger.debug(s);
+				result += (s + "\n");
+			}
 			
 			return result;
 		}

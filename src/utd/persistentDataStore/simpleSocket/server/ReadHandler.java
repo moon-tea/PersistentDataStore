@@ -31,16 +31,14 @@ public class ReadHandler extends Handler
 		String outMessage = "";
 		if( readData == null)
 		{
-			outMessage = "fileReadError\n"; 
+			StreamUtil.writeLine("fileReadError", outputStream); 
 		}
 		else
 		{			
-			str = new String(readData, "UTF-8"); // for UTF-8 encoding
-			outMessage = "ok\n" + 
-						 readData.length + "\n" +
-						 str + "\n";
-		}
-		StreamUtil.writeLine(outMessage, outputStream);
+			StreamUtil.writeLine("ok", outputStream);
+			StreamUtil.writeLine(Integer.toString(readData.length), outputStream);
+			StreamUtil.writeLine(str, outputStream);			
+		}		
 		logger.debug("Finished reading file, data read: " + str);
 	}
 }

@@ -79,6 +79,10 @@ public class Server
 			Handler handler = new DeleteHandler();
 			return handler;
 		}
+		else if ("directory".equalsIgnoreCase(commandString)) {
+			Handler handler = new DirectoryHandler();
+			return handler;
+		}
 		else {
 			throw new ServerException("Unknown Request: " + commandString);
 		}

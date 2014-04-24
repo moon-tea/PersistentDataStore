@@ -46,10 +46,10 @@ public class DatastoreClientTestCase
 		int port = Server.port;
 		Client client = new Client(address, port);
 		
-		String msg = "Write to file";
+		String msg = "New File";
 		byte[] data = "data".getBytes(Charset.forName("UTF-8"));
 		String result = client.write(msg, data, data.length);
-		assertEquals(msg, result);
+		assertEquals("ok", result);
 		
 	}
 	
@@ -61,10 +61,34 @@ public class DatastoreClientTestCase
 		int port = Server.port;
 		Client client = new Client(address, port);
 		
-		String msg = "Write to file";
+		String msg = "New File";
 		String result = client.read(msg);
-		assertEquals(msg, result);
+		assertEquals("ok\n4\ndata", result);		
+	}
+	
+	@Test
+	public void testDirectory() throws Exception
+	{
+		byte byteAddr[] = { 127, 0, 0, 1 };
+		InetAddress address = InetAddress.getByAddress(byteAddr);
+		int port = Server.port;
+		Client client = new Client(address, port);
+				
+		String result = client.directory();
+		assertEquals("ok\n2\nNew File\nWrite to file\n", result);		
+	}
+	
+	@Test
+	public void testDelete() throws Exception
+	{
+		byte byteAddr[] = { 127, 0, 0, 1 };
+		InetAddress address = InetAddress.getByAddress(byteAddr);
+		int port = Server.port;
+		Client client = new Client(address, port);
 		
+		String msg = "New File";
+		String result = client.delete(msg);
+		assertEquals("ok", result);		
 	}
 
 }
