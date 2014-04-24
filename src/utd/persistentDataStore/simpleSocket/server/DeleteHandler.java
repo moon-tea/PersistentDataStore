@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 import utd.persistentDataStore.simpleSocket.FileUtil;
 import utd.persistentDataStore.simpleSocket.StreamUtil;
 
-public class ReadHandler extends Handler
+public class DeleteHandler extends Handler
 {
-	private static Logger logger = Logger.getLogger(ReadHandler.class);
+	private static Logger logger = Logger.getLogger(DeleteHandler.class);
 
 	public void run() throws IOException
 	{
@@ -18,24 +18,36 @@ public class ReadHandler extends Handler
 		String inMessage = StreamUtil.readLine(inputStream);
 		logger.debug("inMessage: " + inMessage);		
 		
-		byte[] readData = null;		
+		//Get byte data from string
+		//byte[] data = inMessage.getBytes(Charset.forName("UTF-8"));
+		
+		//Process message
+		//get tokens
+		String[] tokens = inMessage.split("\n");
+		for(int i = 0; i < tokens.length; i++)
+		{
+			System.out.println(i + ": " + tokens[i]);
+			logger.debug(i + ": " + tokens[i]);
+		}
+		byte[] readData = null;
+		boolean readOK = false;
 		//Write Data
 		try { 
-			readData = FileUtil.readData(inMessage);			
+			readData = FileUtil.readData(inMessage);
+			readOK = true;
 		}
 		catch (ServerException e) {	
 			e.printStackTrace();
 		}
-		String str = "";
+		String str = new String(readData, "UTF-8"); // for UTF-8 encoding
 		// Write response
 		String outMessage = "";
-		if( readData == null)
+		if(!readOK)
 		{
 			outMessage = "fileReadError\n"; 
 		}
 		else
 		{			
-			str = new String(readData, "UTF-8"); // for UTF-8 encoding
 			outMessage = "ok\n" + 
 						 readData.length + "\n" +
 						 str + "\n";

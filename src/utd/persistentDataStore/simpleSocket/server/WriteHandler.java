@@ -17,24 +17,17 @@ public class WriteHandler extends Handler
 		// Read message
 		String inMessage = StreamUtil.readLine(inputStream);
 		logger.debug("inMessage: " + inMessage);
+		String inData = StreamUtil.readLine(inputStream);
+		logger.debug("inData: " + inData);		
 		
 		//Get byte data from string
-		byte[] data = inMessage.getBytes(Charset.forName("UTF-8"));
-		
-		//Process message
-		//get tokens
-		String[] tokens = inMessage.split("\n");
-		for(int i = 0; i < tokens.length; i++)
-		{
-			System.out.println(i + ": " + tokens[i]);
-			logger.debug(i + ": " + tokens[i]);
-		}
+		byte[] data = inData.getBytes(Charset.forName("UTF-8"));
 		
 		//Write Data
 		FileUtil.writeData(inMessage, data);
 
 		// Write response
-		String outMessage = inMessage + "\n";
+		String outMessage = "ok\n";
 		StreamUtil.writeLine(outMessage, outputStream);
 		logger.debug("Finished writing file");
 	}

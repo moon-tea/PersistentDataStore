@@ -19,7 +19,7 @@ public class ReadClient
 			int port = Server.port;
 			Client client = new Client(address, port);
 			
-			String msg = "Write to file"; //this is the file to find
+			String msg = "Write to file2"; //this is the file to find
 			logger.debug("Sending Request " + msg);
 			String reply = client.read(msg);
 			

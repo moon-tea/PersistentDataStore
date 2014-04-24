@@ -83,7 +83,7 @@ public class Client
 	/**
 	 * Sends the given string to the server which will write it to a file
 	 */
-	public String write(String message) throws ClientException
+	public String write(String message, byte[] data, int datasize) throws ClientException
 	{
 		try {
 			logger.debug("Opening Socket");
@@ -96,6 +96,8 @@ public class Client
 			logger.debug("Writing Message");
 			StreamUtil.writeLine("write\n", outputStream);
 			StreamUtil.writeLine(message, outputStream);
+			StreamUtil.writeLine(new String(data, "UTF-8"), outputStream);
+			StreamUtil.writeLine(Integer.toString(datasize), outputStream);
 			
 			logger.debug("Reading Response");
 			String result = StreamUtil.readLine(inputStream);
