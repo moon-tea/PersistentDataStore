@@ -75,6 +75,10 @@ public class Server
 			Handler handler = new ReadHandler();
 			return handler;
 		}
+		else if ("delete".equalsIgnoreCase(commandString)) {
+			Handler handler = new DeleteHandler();
+			return handler;
+		}
 		else {
 			throw new ServerException("Unknown Request: " + commandString);
 		}

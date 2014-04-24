@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 import utd.persistentDataStore.simpleSocket.client.Client;
 import utd.persistentDataStore.simpleSocket.server.Server;
 
-public class ReadClient
+public class DeleteClient
 {
-	private static Logger logger = Logger.getLogger(ReadClient.class);
+	private static Logger logger = Logger.getLogger(DeleteClient.class);
 	
 	public static void main(String args[])
 	{
@@ -19,9 +19,9 @@ public class ReadClient
 			int port = Server.port;
 			Client client = new Client(address, port);
 			
-			String msg = "Write to file"; //this is the file to find
+			String msg = "deleteMe"; //this is the file to delete
 			logger.debug("Sending Request " + msg);
-			String reply = client.read(msg);
+			String reply = client.delete(msg);
 			
 			logger.debug("Received Response <" + reply + ">");
 		}

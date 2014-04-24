@@ -26,7 +26,7 @@ public class ReadHandler extends Handler
 		catch (ServerException e) {	
 			e.printStackTrace();
 		}
-		String str = "";
+		String str = "no data read";
 		// Write response
 		String outMessage = "";
 		if( readData == null)

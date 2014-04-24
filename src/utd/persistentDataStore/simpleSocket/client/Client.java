@@ -136,4 +136,31 @@ public class Client
 			throw new ClientException(ex.getMessage(), ex);
 		}
 	}
+	/**
+	 * Sends the given string to the server which will try to delete the file
+	 */
+	public String delete(String message) throws ClientException
+	{
+		try {
+			logger.debug("Opening Socket");
+			Socket socket = new Socket();
+			SocketAddress saddr = new InetSocketAddress(address, port);
+			socket.connect(saddr);
+			InputStream inputStream = socket.getInputStream();
+			OutputStream outputStream = socket.getOutputStream();
+			
+			logger.debug("Reading Message");
+			StreamUtil.writeLine("delete\n", outputStream);
+			StreamUtil.writeLine(message, outputStream);
+			
+			logger.debug("Reading Response");
+			String result = StreamUtil.readLine(inputStream);
+			logger.debug("Response " + result);
+			
+			return result;
+		}
+		catch (IOException ex) {
+			throw new ClientException(ex.getMessage(), ex);
+		}
+	}
 }

@@ -17,42 +17,25 @@ public class DeleteHandler extends Handler
 		// Read message
 		String inMessage = StreamUtil.readLine(inputStream);
 		logger.debug("inMessage: " + inMessage);		
-		
-		//Get byte data from string
-		//byte[] data = inMessage.getBytes(Charset.forName("UTF-8"));
-		
-		//Process message
-		//get tokens
-		String[] tokens = inMessage.split("\n");
-		for(int i = 0; i < tokens.length; i++)
-		{
-			System.out.println(i + ": " + tokens[i]);
-			logger.debug(i + ": " + tokens[i]);
-		}
-		byte[] readData = null;
-		boolean readOK = false;
+		boolean deleted = false;	
 		//Write Data
 		try { 
-			readData = FileUtil.readData(inMessage);
-			readOK = true;
+			deleted = FileUtil.deleteData(inMessage);
 		}
 		catch (ServerException e) {	
 			e.printStackTrace();
-		}
-		String str = new String(readData, "UTF-8"); // for UTF-8 encoding
+		}		
 		// Write response
 		String outMessage = "";
-		if(!readOK)
+		if(deleted)
 		{
-			outMessage = "fileReadError\n"; 
+			outMessage = "ok\n"; 
 		}
 		else
 		{			
-			outMessage = "ok\n" + 
-						 readData.length + "\n" +
-						 str + "\n";
+			outMessage = "ErrorFileNotFound\n";
 		}
 		StreamUtil.writeLine(outMessage, outputStream);
-		logger.debug("Finished reading file, data read: " + str);
+		logger.debug("Finished deleting file.");
 	}
 }
